@@ -6,11 +6,11 @@ const files = [
   { name: "document.pdf", group: "StudyGroup", date: "2025-06-16", url: "#", chatType: "Group", fileType: "PDF" },
   { name: "notes.txt", group: "ClassA", date: "2025-06-15", url: "#", chatType: "Group", fileType: "Other" },
   { name: "funny_meme.png", group: "CloseFriends", date: "2025-06-14", url: "#", chatType: "Group", fileType: "Image" },
-  { name: "project.zip", group: "Marketing", date: "2025-06-13", url: "#", chatType: "Group", fileType: "Other" },
-  { name: "presentation.pdf", group: "Community", date: "2025-06-12", url: "#", chatType: "Group", fileType: "PDF" },
+  { name: "project.zip", group: "Software Testing", date: "2025-06-13", url: "#", chatType: "Group", fileType: "Other" },
+  { name: "presentation.pdf", group: "Club", date: "2025-06-12", url: "#", chatType: "Group", fileType: "PDF" },
   { name: "dance_video.mp4", group: "Friends", date: "2025-06-11", url: "#", chatType: "Group", fileType: "Video" },
   { name: "poster.jpg", group: "VMES64", date: "2025-06-10", url: "#", chatType: "Group", fileType: "Image" },
-  { name: "todo.docx", group: "BusinessClub", date: "2025-06-09", url: "#", chatType: "Group", fileType: "Other" },
+  { name: "todo.docx", group: "Senior Project2", date: "2025-06-09", url: "#", chatType: "Group", fileType: "Other" },
 ];
 
 const FileGallery = () => {
