@@ -1,43 +1,34 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 
 const files = [
-  // Group Chat
-  { name: "VMES.png", group: "VMES64", date: "2025-06-15", url: "#", chatType: "Group" },
-  { name: "project_notes.docx", group: "Family", date: "2025-06-14", url: "#", chatType: "Group" },
-  { name: "funny_meme.jpg", group: "Friends", date: "2025-06-13", url: "#", chatType: "Group" },
-
-  // OpenChat
-  { name: "travel_diary.pdf", group: "ABAC", date: "2025-06-11", url: "#", chatType: "OpenChat" },
-  { name: "recipe_tomyum.jpg", group: "Dcondo", date: "2025-06-09", url: "#", chatType: "OpenChat" },
-  { name: "community_event.jpg", group: "Food", date: "2025-06-04", url: "#", chatType: "OpenChat" },
+  { name: "group_photo.jpg", group: "Family", date: "2025-06-18", url: "#", chatType: "Group", fileType: "Image" },
+  { name: "meeting.mp4", group: "WorkTeam", date: "2025-06-17", url: "#", chatType: "Group", fileType: "Video" },
+  { name: "document.pdf", group: "StudyGroup", date: "2025-06-16", url: "#", chatType: "Group", fileType: "PDF" },
+  { name: "notes.txt", group: "ClassA", date: "2025-06-15", url: "#", chatType: "Group", fileType: "Other" },
+  { name: "funny_meme.png", group: "CloseFriends", date: "2025-06-14", url: "#", chatType: "Group", fileType: "Image" },
+  { name: "project.zip", group: "Marketing", date: "2025-06-13", url: "#", chatType: "Group", fileType: "Other" },
+  { name: "presentation.pdf", group: "Community", date: "2025-06-12", url: "#", chatType: "Group", fileType: "PDF" },
+  { name: "dance_video.mp4", group: "Friends", date: "2025-06-11", url: "#", chatType: "Group", fileType: "Video" },
+  { name: "poster.jpg", group: "VMES64", date: "2025-06-10", url: "#", chatType: "Group", fileType: "Image" },
+  { name: "todo.docx", group: "BusinessClub", date: "2025-06-09", url: "#", chatType: "Group", fileType: "Other" },
 ];
 
 const FileGallery = () => {
   const [query, setQuery] = useState('');
-  const [chatTypeFilter, setChatTypeFilter] = useState('');
   const [groupFilter, setGroupFilter] = useState('');
+  const [typeFilter, setTypeFilter] = useState('');
 
   const availableGroups = useMemo(() => {
-    return [...new Set(
-      files
-        .filter(file => chatTypeFilter === '' || file.chatType === chatTypeFilter)
-        .map(file => file.group)
-    )];
-  }, [chatTypeFilter]);
+    return [...new Set(files.map(file => file.group))];
+  }, []);
 
-  useEffect(() => {
-    if (chatTypeFilter === '') {
-      setGroupFilter('');
-    } else {
-      setGroupFilter(availableGroups[0] || '');
-    }
-  }, [chatTypeFilter, availableGroups]);
+  const fileTypeOptions = ['File Type', 'Image', 'Video', 'PDF', 'Other'];
 
   const filteredFiles = files.filter(file =>
     (file.name.toLowerCase().includes(query.toLowerCase()) ||
       file.group.toLowerCase().includes(query.toLowerCase())) &&
-    (chatTypeFilter === '' || file.chatType === chatTypeFilter) &&
-    (groupFilter === '' || file.group === groupFilter)
+    (groupFilter === '' || file.group === groupFilter) &&
+    (typeFilter === '' || file.fileType === typeFilter)
   );
 
   return (
@@ -55,22 +46,22 @@ const FileGallery = () => {
 
         <select
           className="p-2 border border-gray-300 rounded-md"
-          value={chatTypeFilter}
-          onChange={(e) => setChatTypeFilter(e.target.value)}
+          value={groupFilter}
+          onChange={(e) => setGroupFilter(e.target.value)}
         >
-          <option value="">All Chat Types</option>
-          <option value="Group">Group Chat</option>
-          <option value="OpenChat">OpenChat</option>
+          <option value="">All Groups</option>
+          {availableGroups.map((group, idx) => (
+            <option key={idx} value={group}>{group}</option>
+          ))}
         </select>
 
         <select
           className="p-2 border border-gray-300 rounded-md"
-          value={groupFilter}
-          onChange={(e) => setGroupFilter(e.target.value)}
+          value={typeFilter}
+          onChange={(e) => setTypeFilter(e.target.value)}
         >
-          {chatTypeFilter === '' && <option value="">All Groups</option>}
-          {availableGroups.map((group, idx) => (
-            <option key={idx} value={group}>{group}</option>
+          {fileTypeOptions.map((type, idx) => (
+            <option key={idx} value={type === 'All' ? '' : type}>{type}</option>
           ))}
         </select>
       </div>
@@ -90,7 +81,7 @@ const FileGallery = () => {
             <div className="p-4">
               <h2 className="font-semibold">{file.name}</h2>
               <p className="text-sm text-gray-600">
-                {file.date} • {file.chatType} • {file.group}
+                {file.date} • {file.group} • {file.fileType}
               </p>
               <a href={file.url} className="text-green-500 mt-2 inline-block underline">Download</a>
             </div>
